@@ -3,24 +3,16 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 
-	"github.com/Kinesocks/cat_facts_service/handlers"
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	appServer "github.com/Kinesocks/cat_facts_service/server"
 )
 
 func main() {
-	r := chi.NewRouter()
-	r.Use(middleware.Logger)
 
-	r.Get("/breeds", handlers.GetBreeds)
-	r.Get("/fact", handlers.GetFact)
-	r.Get("/facts", handlers.GetFacts)
-
+	server := appServer.NewServer()
 	fmt.Println("Server is running...")
 
-	err := http.ListenAndServe("0.0.0.0:8888", r)
+	err := server.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)
 	}
